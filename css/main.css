@@ -1,0 +1,195 @@
+/* SITE WIDE */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  font-family: 'Indie Flower', cursive;
+}
+
+/* CLEAR FIX  */
+  /*(use .clear-fix class to clear any floated elements)*/
+    .clear-fix:before, .clear-fix:after {
+      content: "";
+      display: table;
+    }
+
+    .clear-fix:after {
+      clear: both;
+    }
+
+    .clear-fix {
+      clear: both;
+    }
+
+/*reference lines on divs*/
+div {
+  border-radius: 10px;
+  border: 0.01em solid grey;
+}
+
+
+/* TOP HEADER SECTION */
+   header {
+    height: 120px;
+  }
+
+  div.header-title-section {
+    border: none;
+  }
+
+  div > #title, input {
+    display: inline-block;
+    margin-left: 40%;
+    margin-top: 2%;
+  }
+
+  #title {
+    padding-right: 0.5em;
+  }
+
+  .input-title {
+    font-size: 2em;
+    padding-left: 1em;
+    border-radius: 10px;
+  }
+
+  /* css for main title */
+  .headerTitle {
+    font-size: 2em;
+    padding-left: 1em;
+    border-radius: 10px;
+    border: 0.01em solid grey;
+    width: 25%;
+    display: inline-block;
+  }
+
+/* MAIN CONTENT SECTION */
+  /* clear fix for floated elements..refer to clear-fix class above */
+  .main-content {
+    height:800px;
+  }
+
+  .list-todos, .main-todos {
+    /*display: inline-block;*/
+    text-align: center;
+    /*margin: 2em;*/
+  }
+
+/*  LIST-TODOS SECTION */
+  .list-todos {
+    height: 800px;
+    width: 30%;
+    overflow: scroll;
+    float: left;
+  }
+
+  .list-todos-box {
+    border: 0.01em solid blue;
+    min-height: 20%;
+    margin: 8%;
+  }
+
+  .list-todos-buttons {
+    font-size: 1.5em;
+    margin: 5% 0 0 1%;
+    border: none;
+  }
+
+  .list-todos-buttons .destroy {
+
+  }
+
+  .list-todos-buttons, .done {
+
+  }
+
+/* BODY MAIN-TODOS SECTION */
+  .main-todos {
+    height: 800px;
+    width: 70%;
+    float: right;
+  }
+
+  .main-todos-box {
+    margin: 2% auto 5% auto;
+    height: 700px;
+    width: 85%;
+    overflow: scroll;
+  }
+
+  /* input box */
+    #add-items {
+      text-align: center;
+      font-size: 2em;
+      line-height: 2em;
+      width: 50%;
+      margin-top: 2%;
+      border: 0.01em solid grey;
+      border-radius: 10px;
+  /*  position: relative;
+      right: 20%;*/
+    */
+    }
+
+  /* Drop down todo list */
+    .list-drop-down {
+      width: 60%;
+      height: 7%;
+      line-height: 1.6em;
+      margin-top: 2%;
+      font-size: 2em;
+      margin-left: 20%;
+
+    }
+
+    div >.list-drop-down {
+      border: none;
+    }
+
+    .list-drop-down > p {
+      border: 0.01em solid grey;
+      border-radius: 10px;
+    }
+
+  /* buttons */
+    .trash {
+      float: left;
+    }
+
+    .finished {
+      float: right;
+    }
+
+    .delete, .save {
+      margin: 1em;
+    }
+
+  /* Memo section */
+    .description > input {
+      height: 200px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.description {
+      border: none;
+    }
+
+  /* CSS For button done */
+    .fin {
+      background-color: rgba(195, 195, 22, 0.26);
+    }
+
+  /* CSS For memo */
+    p.memo {
+      height: 200px;
+      width: 100%;
+      text-align: center;
+      border: 0.01em solid grey;
+      overflow-y: scroll;
+    }
