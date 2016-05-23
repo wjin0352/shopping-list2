@@ -1,124 +1,91 @@
-$(document).ready(function() {
-  // global var input box
-  var inputPrompt = $('#add-items');
+// MVC design pattern. First create a namespace, and then create a constructor function for the model with any necessary attributes and methods. Next, create the view constructor, with any relevant listeners. Finally, implement the controller constructor to link the model and view so that changes in either are passed to other.
 
-  // Add Header Title feature
-    $('.input-title').keydown(function(event) {
-      // var keycode = (event.keyCode ? event.keyCode : event.which);
-      if (event.keyCode == 13) {
-        var title = $('.input-title').val();
-        createTitle(title);
-      };
-    });
+(function(){
+  $(function() {
+    console.log(todo);
+    controller.initialize(inputView);
+  });
 
 
-  // Edit Header Title feature
-    $(document).on('click', '.headerTitle', function(event) {
-      editTitle();
-    });
+var inputPrompt = $('#add-items');
 
-  // Add list item feature
-    $('#add-items').keydown(function(event) {
-      if (event.keyCode == 13) {
-        prependListItem();
+// namespacing object
+var todo = {};
 
-        // sets the input box back to empty ''
-        inputPrompt.val('');
-      };
-    });
+// Model Constructor will contain all attributes and methods
+// todo.Model = function(view) {
+//   this.view = view;
+//   this.inputItem = [];
+//   // this.createTodoListHTML = view.createTodoListHTML.bind(view);
+// };
 
-  // Trash button feature
-    $(document).on('click', '.trash', function() {
-      var item = $(this);
-      deleteListItem(item);
-    });
+todo.Model = function() {
+  this.inputItem = [];
+  // holds a callback to notify other parts of the app that model has changed
+  this.onChange = null;
 
-  // Done button feature
-  // Adds .fin class on finished list items, then removes .fin class
-  // on 2nd click
-    $(document).on('click', '.finished', function() {
-      if (!$(this).closest('p').hasClass('fin')) {
-        $(this).closest('p').addClass("fin");
+  // this.createTodoListHTML = view.createTodoListHTML.bind(view);
+};
+
+  todo.Model.prototype.addOnChange = function(callback) {
+    this.onChange = callback;
+  };
+
+
+  todo.Model.prototype.setData = function(newItem) {
+    // push data to our array on the model object
+    console.log(newItem.target.value);
+    this.inputItem.push(newItem);
+    // this.view.prependListItem(newItem);
+    if (this.onChange !== null) {
+      // run the callback function
+      this.onChange(newItem);
+
+    }
+  };
+
+  var model = new todo.Model();
+
+
+
+// View Object Constructor for the main user input
+todo.ViewItem = function() {
+  this.element = document.getElementById('add-items');
+  this.onInput = null;
+};
+
+  // event listener
+  todo.ViewItem.prototype.addListenerUserInput = function() {
+    // save view object as variable
+    var self = this;
+
+    // pass view obj as the parameter to model method setData()??
+    // self.element.addEventListener('input', model.setData.bind(self));
+    // self.element.addEventListener('input', model.setData.bind(model));
+
+    $('#add-items').keydown(function(e) {
+      if (e.keyCode == 13) {
+        console.log(e.target.value);
+        // model.setData.bind(model);
+        // model.setData(e);
       }
-      else {
-        $(this).closest('p').removeClass('fin');
-      };
     });
-
-    $(document).on('click', '.fin', function() {
-      $(this).closest('p').removeClass("fin");
-    });
-
-  // Creates a memo from input box
-    $('#description').keydown(function(event) {
-      var memo = $('#description').val();
-      if (event.keyCode == 13) {
-        createMemo(memo);
-      };
-    });
-
-  // Edits memo input box
-    $(document).on('click', '.memo', function() {
-      editMemo();
-    });
-
-  // // Memo save button
-  //   $(document).on('click', '.save', function() {
-  //     var memo = $('#description').val();
-
-  //   });
-
-  // // Memo delete button
-  //   $(document).on('click', '.delete', function() {
-  //     // $('.memo').val('');
-  //     $('#description').show();
-  //   });
-
-  function createTodoHTML() {
-    var newItem = inputPrompt.val();
-    if (newItem != false) {
-      return ('<p><button class="trash btn btn-warning btn-lg">TRASH</button>' + newItem + '<button class="finished btn btn-success btn-lg">DONE!</button></p>');
-    };
   };
 
-  function prependListItem() {
-    $('.list-drop-down').prepend(createTodoHTML())
-        $('.list-drop-down p:first-child')
-        .css('opacity', "0")
-        .css("margin-top", "20px")
-        .animate(
-            { opacity: "1" },
-            { queue: true, duration: 'slow' }
-        )
-        .animate(
-            {marginTop: "0px"},
-            { queue: false, duration: 'slow' }
-        );;
-  };
 
-  function deleteListItem(item) {
-    $(item).closest('p').fadeOut(400);
-  };
+var inputView = new todo.ViewItem();
 
-  function createMemo(memo) {
-    var message = '<p class="memo">' + memo + '</p>';
-      $('input#description').hide();
-      $('.description').append(message);
-  };
 
-  function editMemo() {
-    $('.memo').hide();
-    $('#description').show().focus();
-  };
+todo.Controller = function() {
+  model.onChange = model.setData.bind(model)
+};
 
-  function createTitle(title) {
-    var mainTitle = '<p class="headerTitle">' + title + '</p>';
-    $('input.input-title').hide();
-    $('.header-title-section').append(mainTitle);
-  };
+  todo.Controller.prototype.initialize = function(inputView) {
+    // alert(this);
+    console.log(inputView);
+    inputView.addListenerUserInput();
+  }
 
-  function editTitle() {
-    $('.headerTitle').hide();
-    $('.input-title').show().focus();
-  };
-});
+var controller = new todo.Controller();
+
+})();
